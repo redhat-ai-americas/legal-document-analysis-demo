@@ -1,0 +1,91 @@
+# Contract Evaluation Questionnaire
+# Includes guidelines derived from due diligence review templates.
+
+contract_evaluation:
+  part_1_document_information:
+    title: "Document & Reviewer Information"
+    questions:
+      - id: document_name
+        prompt: "What is the official name or title of the document being reviewed?"
+        guideline: "Use the document's full title as it appears on the page."
+        answer: ""
+      - id: reviewer_name
+        prompt: "Who is conducting this review?"
+        guideline: "Enter your full name."
+        answer: ""
+      - id: target_company_name
+        prompt: "What is the name of the target company?"
+        guideline: "Use the legal name of the company being acquired or reviewed."
+        answer: ""
+      - id: counterparty_name
+        prompt: "What is the name of the other party to the contract?"
+        guideline: "Use the other party's full legal name. Note if it's a Customer, Partner, etc."
+        answer: ""
+      - id: datasite_location
+        prompt: "Where is the document stored (e.g., folder path, URL)?"
+        guideline: "Provide a direct link or the exact folder path for easy retrieval."
+        answer: ""
+      - id: contract_start_date
+        prompt: "When does the contract term begin?"
+        guideline: "Use YYYY-MM-DD format. If not specified, note as 'Not Stated'."
+        relevant_terms: ["term"]
+        answer: ""
+      - id: agreement_type
+        prompt: "What type of agreement is this (e.g., Master Agreement, SOW, SaaS)?"
+        guideline: "Categorize the agreement. Examples: Master, SOW, SaaS, Amendment, Order Form."
+        answer: ""
+      - id: based_on_standard_terms
+        prompt: "Is this contract on the target's standard terms?"
+        guideline: "Answer 'Target Standard', 'Third-Party Paper', or 'Hybrid'."
+        answer: ""
+
+  part_2_key_clause_analysis:
+    title: "Key Clause Analysis"
+    questions:
+      - id: source_code_access
+        prompt: "Does the counterparty have rights to access source code?"
+        guideline: "Note any rights to source code, directly or through escrow. Identify release triggers (e.g., bankruptcy, failure to support) and usage rights after release."
+        relevant_terms: ["source_code_escrow", "intellectual_property_rights"]
+        answer: ""
+      - id: exclusivity_non_competes
+        prompt: "Does the contract impose any exclusivity or non-compete obligations on the seller?"
+        guideline: "Look for any grant of exclusive rights or non-compete clauses. For example, restrictions on who to sell to or where."
+        relevant_terms: ["non_compete_exclusivity"]
+        answer: ""
+      - id: forced_pricing_adjustments
+        prompt: "Are there any clauses that guarantee the customer preferential pricing?"
+        guideline: "Look for MFN/MFC (Most Favored Customer/Nation) clauses or other pricing guarantees or restrictions."
+        relevant_terms: ["most_favored_nation"]
+        answer: ""
+      - id: ip_rights
+        prompt: "How are IP rights handled?"
+        guideline: "Identify who owns IP. Note unusual terms like licenses broader than internal use, customer-owned work product, or 'works for hire' clauses."
+        relevant_terms: ["intellectual_property_rights"]
+        answer: ""
+      - id: limitation_of_liability
+        prompt: "What are the liability terms?"
+        guideline: "Note if there is no cap on direct damages or no waiver for consequential/indirect damages. Specify any 'super caps' or special carve-outs."
+        relevant_terms: ["limitation_of_liability"]
+        answer: ""
+      - id: assignment_coc
+        prompt: "Are there restrictions on assignment or Change of Control (CoC)?"
+        guideline: "Note if seller's consent is required to assign, or if a Change of Control clause is present that could be triggered by an acquisition."
+        relevant_terms: ["assignment_change_of_control"]
+        answer: ""
+      - id: indemnity
+        prompt: "Summarize the key terms of the indemnification clause."
+        guideline: "Describe who indemnifies whom and for what (e.g., IP infringement, data breach). Note if the indemnity is capped or has procedural requirements."
+        relevant_terms: ["indemnification"]
+        answer: ""
+
+  part_3_gaps_internal_comments:
+    title: "Gaps & Internal Comments"
+    questions:
+      - id: knowledge_gaps
+        prompt: "What critical information or documents are missing?"
+        guideline: "List information needed from the Seller and identify any missing related documents (e.g., base agreements, amendments, SOWs)."
+        answer: ""
+      - id: internal_comments
+        prompt: "What are your internal comments or questions?"
+        guideline: "Use for internal comments or questions for the deal team. This information is not intended for the seller."
+        answer: ""

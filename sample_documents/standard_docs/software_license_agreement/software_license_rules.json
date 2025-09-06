@@ -1,0 +1,411 @@
+{
+  "rules": [
+    {
+      "id": "license_grant",
+      "name": "License Grant",
+      "description": "Ensures proper license scope and restrictions are maintained",
+      "rule_text": "License must be limited, non-exclusive, non-sublicensable, and non-transferable except as permitted in assignment provisions.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "license",
+        "grant",
+        "non-exclusive",
+        "non-sublicensable",
+        "non-transferable",
+        "limited"
+      ],
+      "exceptions": ["Assignment section permits transfer under specific conditions"]
+    },
+    {
+      "id": "usage_data_rights",
+      "name": "Usage Data Rights",
+      "description": "Provider's right to collect and use usage data for product improvement",
+      "rule_text": "Provider must be permitted to collect and analyze usage data to maintain, improve, and enhance products and services. Disclosure of usage data must be limited to aggregated form that doesn't identify customer.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "usage data",
+        "analytics",
+        "collect",
+        "analyze",
+        "aggregated",
+        "de-identified"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "machine_learning_rights",
+      "name": "Machine Learning Rights",
+      "description": "Rights to use data for AI/ML model development",
+      "rule_text": "Provider must be permitted to use aggregated and de-identified usage data to develop, train, or enhance AI/ML models with commercially reasonable efforts to de-identify data.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "machine learning",
+        "artificial intelligence",
+        "AI",
+        "ML",
+        "model",
+        "training",
+        "de-identify"
+      ],
+      "exceptions": ["Subject to applicable data protection laws"]
+    },
+    {
+      "id": "reverse_engineering_prohibition",
+      "name": "Reverse Engineering Prohibition",
+      "description": "Prohibition on reverse engineering, decompiling, or discovering source code",
+      "rule_text": "Customer must be prohibited from reverse engineering, decompiling, or attempting to discover source code or underlying algorithms except where applicable laws prohibit this restriction.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "reverse engineer",
+        "decompile",
+        "source code",
+        "algorithms",
+        "disassemble"
+      ],
+      "exceptions": ["Where prohibited by applicable laws"]
+    },
+    {
+      "id": "resale_prohibition",
+      "name": "Resale and Distribution Prohibition",
+      "description": "Prohibition on reselling, sublicensing, or distributing the software",
+      "rule_text": "Customer must be prohibited from providing, selling, transferring, sublicensing, lending, distributing, renting, or otherwise allowing others to access or use the product.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "sell",
+        "transfer",
+        "sublicense",
+        "distribute",
+        "rent",
+        "resell",
+        "provide access"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "derivative_works_prohibition",
+      "name": "Derivative Works Prohibition",
+      "description": "Prohibition on creating derivative works or modifications",
+      "rule_text": "Customer must be prohibited from copying, modifying, or creating derivative works of the product.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "copy",
+        "modify",
+        "derivative works",
+        "modifications",
+        "alter",
+        "adapt"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "high_risk_activity_prohibition",
+      "name": "High Risk Activity Prohibition",
+      "description": "Prohibition on use in high-risk activities that could lead to death, injury, or environmental damage",
+      "rule_text": "Customer must be prohibited from using the product with any high risk activity where failure could lead to death, bodily injury, or environmental damage.",
+      "default_status": "non_compliant",
+      "severity": "critical",
+      "keywords": [
+        "high risk",
+        "death",
+        "bodily injury",
+        "environmental damage",
+        "life support",
+        "nuclear",
+        "air traffic"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "suspension_rights",
+      "name": "Suspension Rights",
+      "description": "Provider's right to suspend service for breach or non-payment",
+      "rule_text": "Provider must have the right to temporarily suspend customer access for: (a) outstanding undisputed balance over 30 days, (b) breach of restrictions, or (c) use that materially impacts the product or others.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "suspend",
+        "suspension",
+        "temporary",
+        "access",
+        "outstanding balance",
+        "breach"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "payment_terms",
+      "name": "Payment Terms",
+      "description": "Payment obligations and timing requirements",
+      "rule_text": "Fees must be non-refundable except for specific termination rights. Customer must pay according to agreed payment process with taxes being customer's responsibility except for provider's income taxes.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "payment",
+        "fees",
+        "non-refundable",
+        "taxes",
+        "invoice",
+        "billing"
+      ],
+      "exceptions": ["Pro-rated refund for specific termination scenarios"]
+    },
+    {
+      "id": "automatic_renewal",
+      "name": "Automatic Renewal",
+      "description": "Automatic renewal of subscription periods",
+      "rule_text": "Agreement must automatically renew for additional subscription periods unless either party provides notice of non-renewal before the non-renewal notice date.",
+      "default_status": "non_compliant",
+      "severity": "low",
+      "keywords": [
+        "automatic renewal",
+        "renew",
+        "subscription period",
+        "non-renewal notice"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "termination_for_breach",
+      "name": "Termination for Material Breach",
+      "description": "Right to terminate for material breach with cure period",
+      "rule_text": "Either party must be able to terminate immediately if the other party fails to cure a material breach following 30 days notice, or immediately for breaches that cannot be cured.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "terminate",
+        "material breach",
+        "cure",
+        "30 days",
+        "notice"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "force_majeure",
+      "name": "Force Majeure",
+      "description": "Force majeure provisions for unforeseen events",
+      "rule_text": "Neither party should be liable for delays or failures caused by force majeure events. Either party may terminate if force majeure prevents material operation for 30+ consecutive days.",
+      "default_status": "compliant",
+      "severity": "low",
+      "keywords": [
+        "force majeure",
+        "unforeseen",
+        "natural disaster",
+        "war",
+        "pandemic",
+        "act of god"
+      ],
+      "exceptions": ["Does not excuse payment obligations accrued prior to termination"]
+    },
+    {
+      "id": "warranty_disclaimer",
+      "name": "Warranty Disclaimer",
+      "description": "Disclaimer of implied warranties",
+      "rule_text": "All implied warranties must be disclaimed including merchantability, fitness for a particular purpose, title, and non-infringement to the maximum extent permitted by law.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "warranty",
+        "disclaimer",
+        "as is",
+        "merchantability",
+        "fitness",
+        "implied warranties"
+      ],
+      "exceptions": ["Express warranties specifically provided"]
+    },
+    {
+      "id": "limitation_of_liability",
+      "name": "Limitation of Liability",
+      "description": "Caps on liability and exclusion of consequential damages",
+      "rule_text": "Total liability must be capped at amounts paid in prior 12 months. Consequential, special, indirect, and punitive damages must be excluded.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "limitation of liability",
+        "liability cap",
+        "consequential damages",
+        "indirect damages",
+        "punitive damages",
+        "lost profits"
+      ],
+      "exceptions": ["May not apply to increased claims or unlimited claims as defined"]
+    },
+    {
+      "id": "ip_indemnification",
+      "name": "IP Indemnification",
+      "description": "Provider's obligation to indemnify for IP infringement claims",
+      "rule_text": "Provider must indemnify customer against third-party claims that the product infringes intellectual property rights, with right to modify or replace product if needed.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "indemnify",
+        "indemnification",
+        "intellectual property",
+        "infringement",
+        "patent",
+        "copyright",
+        "trademark"
+      ],
+      "exceptions": ["Unauthorized modifications", "Unauthorized use", "Failure to update"]
+    },
+    {
+      "id": "confidentiality",
+      "name": "Confidentiality Obligations",
+      "description": "Mutual obligations to protect confidential information",
+      "rule_text": "Each party must protect the other's confidential information using at least reasonable standard of care and not disclose except as needed to fulfill obligations.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "confidential",
+        "confidentiality",
+        "non-disclosure",
+        "proprietary",
+        "confidential information"
+      ],
+      "exceptions": ["Publicly known", "Independently developed", "Required by law"]
+    },
+    {
+      "id": "assignment",
+      "name": "Assignment Restrictions",
+      "description": "Restrictions on assignment of the agreement",
+      "rule_text": "Neither party may assign rights or obligations without prior written consent, except either party may assign upon merger, change of control, or sale of substantially all assets.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "assignment",
+        "assign",
+        "transfer",
+        "merger",
+        "change of control",
+        "acquisition"
+      ],
+      "exceptions": ["Merger, change of control, or sale of substantially all assets"]
+    },
+    {
+      "id": "export_controls",
+      "name": "Export Control Compliance",
+      "description": "Compliance with export control laws and embargo restrictions",
+      "rule_text": "Customer must comply with all export control laws and not be a resident/national of embargoed country or on sanctions lists. Provider may terminate to comply with export controls.",
+      "default_status": "non_compliant",
+      "severity": "critical",
+      "keywords": [
+        "export",
+        "export control",
+        "embargo",
+        "sanctions",
+        "OFAC",
+        "restricted parties"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "governing_law",
+      "name": "Governing Law and Jurisdiction",
+      "description": "Choice of governing law and exclusive jurisdiction",
+      "rule_text": "Agreement must specify governing law without conflict of laws provisions and exclusive jurisdiction in chosen courts.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "governing law",
+        "jurisdiction",
+        "exclusive jurisdiction",
+        "chosen courts",
+        "venue"
+      ],
+      "exceptions": ["Injunctive relief may be sought in any court of competent jurisdiction"]
+    },
+    {
+      "id": "entire_agreement",
+      "name": "Entire Agreement",
+      "description": "Agreement supersedes all prior agreements and rejects additional terms",
+      "rule_text": "Agreement must constitute entire agreement and expressly reject any terms in customer purchase orders or vendor portals unless signed by authorized representative.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "entire agreement",
+        "supersedes",
+        "purchase order",
+        "vendor portal",
+        "additional terms"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "anti_bribery",
+      "name": "Anti-Bribery Compliance",
+      "description": "Compliance with anti-bribery and anti-corruption laws",
+      "rule_text": "Both parties must comply with anti-bribery laws including FCPA and UK Bribery Act, prohibiting offering or receiving anything of value to obtain business.",
+      "default_status": "compliant",
+      "severity": "critical",
+      "keywords": [
+        "bribery",
+        "corruption",
+        "FCPA",
+        "UK Bribery Act",
+        "anti-corruption"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "updates_included",
+      "name": "Updates and Maintenance",
+      "description": "Inclusion of updates during subscription period",
+      "rule_text": "Provider must provide updates and maintenance releases at no additional charge during the subscription period. Customer must install updates as soon as practicable.",
+      "default_status": "non_compliant",
+      "severity": "low",
+      "keywords": [
+        "updates",
+        "maintenance",
+        "patches",
+        "releases",
+        "upgrades"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "feedback_rights",
+      "name": "Feedback Rights",
+      "description": "Provider's unrestricted right to use customer feedback",
+      "rule_text": "Provider must have unrestricted right to use any feedback provided by customer without restriction or obligation.",
+      "default_status": "non_compliant",
+      "severity": "low",
+      "keywords": [
+        "feedback",
+        "suggestions",
+        "comments",
+        "improvements",
+        "ideas"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "logo_rights",
+      "name": "Marketing and Logo Rights",
+      "description": "Provider's right to identify customer in marketing materials",
+      "rule_text": "Provider may identify customer and use customer's name and logo in marketing to identify customer as a user of provider's products, but other announcements require approval.",
+      "default_status": "compliant",
+      "severity": "low",
+      "keywords": [
+        "logo",
+        "marketing",
+        "publicity",
+        "reference",
+        "customer list"
+      ],
+      "exceptions": ["Public announcements beyond identification require prior approval"]
+    }
+  ],
+  "metadata": {
+    "document_type": "Software License Agreement",
+    "version": "1.0",
+    "created_date": "2024-12-19",
+    "description": "Compliance rules derived from standard Software License Agreement for assessing third-party contracts"
+  }
+}

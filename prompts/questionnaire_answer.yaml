@@ -1,0 +1,66 @@
+name: "Contract Question Answering"
+description: "Prompt for answering contract evaluation questions based on classified sentences"
+template: |
+  You are a contract analysis expert reviewing contract clauses.
+
+  Your task is to answer this question:
+  <question>{question_prompt}</question>
+
+  Follow this guideline when answering:
+  <guideline>{guideline}</guideline>
+
+  Here are the relevant contract clauses from the target contract:
+  <target_clauses>
+  {target_clauses}
+  </target_clauses>
+
+  {reference_section}
+
+  Based on the contract clauses above, provide a direct answer to the question following the guideline.
+
+  **Important Instructions:**
+  - Answer the question directly and concisely
+  - Use specific details from the contract clauses when available
+  - If information is not found in the provided clauses, state "Not specified in the contract"
+  - For dates, use YYYY-MM-DD format when possible
+  - Be factual and avoid speculation
+  - Quote relevant text when it directly supports your answer
+
+  Your answer should be suitable for inclusion in a contract review summary.
+  Return your response strictly as JSON with this schema (no markdown, no extra text):
+  {{
+    "answer": "string",               # Direct answer in well-formed prose, concise but complete
+    "reasoning": "string",            # Your reasoning and key evidence; include short quotes when useful
+    "citations": [0]                   # Indices of target_clauses that support the answer
+  }}
+
+variables:
+  - name: "question_prompt"
+    type: "string"
+    description: "The question being asked about the contract"
+    required: true
+  - name: "guideline"
+    type: "string"
+    description: "The guideline for how to answer the question"
+    required: true
+  - name: "target_clauses"
+    type: "string"
+    description: "Numbered list of relevant clauses from the target contract"
+    required: true
+  - name: "reference_section"
+    type: "string"
+    description: "Optional section containing reference contract clauses"
+    required: false
+    default: ""
+parameters:
+  temperature: 0.1
+  max_tokens: 1500
+
+# Template for when reference clauses are available
+reference_template: |
+  Here are the relevant clauses from the reference contract for comparison 
+  (this is from our standard contract, and the point is not to worry about 
+  textual differences but legally meaningful differences):
+  <reference_clauses>
+  {reference_clauses}
+  </reference_clauses>

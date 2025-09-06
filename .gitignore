@@ -1,0 +1,160 @@
+# Environment and Secrets
+.env
+.env.local
+.env.production
+.env.staging
+*.key
+api_keys.txt
+secrets.yaml
+config/secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# Sensitive Data Directories
+data/
+!data/test/           # Allow test data (if non-sensitive)
+!data/sample/         # Allow sample data (if non-sensitive)
+
+# Logs and Run Data
+logs/
+*.log
+run_*/
+debug_states/
+state_*.json
+error_*.json
+run_summary.json
+
+# Excel Output Files (Potentially Sensitive)
+*.xlsx
+*.xls
+*.xlsm
+*_template.xlsx
+*_master.xlsx
+analysis_template.xlsx
+contract_analysis_template_master.xlsx
+
+# CSV Output Files (Potentially Sensitive)  
+output.csv
+contract_analysis.csv
+batch_results.csv
+processing_results.csv
+
+# YAML and Markdown Output (May Contain Sensitive Data)
+contract_analysis.yaml
+contract_analysis.md
+processing_metadata.json
+analysis_output.yaml
+
+# Temporary and Debug Files
+temp/
+tmp/
+debug_/
+*.tmp
+*.temp
+debug_*.py
+test_output/
+scratch/
+
+# Document Processing Outputs
+processed_documents/
+converted_pdfs/
+extracted_text/
+classified_sentences/
+
+# Model Outputs and Cache
+model_cache/
+classification_cache/
+*.pkl
+*.pickle
+embeddings/
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebooks (May Contain Sensitive Outputs)
+.ipynb_checkpoints/
+*.ipynb
+
+# System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Input Documents (Potentially Sensitive)
+contracts/
+input_contracts/
+reference_documents/
+test_contracts/
+sample_contracts/
+*.pdf
+*.docx
+*.doc
+
+# Exception: Allow sample/demo files that are non-sensitive
+!sample_demo.pdf
+!demo_contract.pdf
+!reference_template_demo.pdf
+
+# Backup Files
+*.bak
+*.backup
+*~
+.backup/
+
+# Documentation (ALLOW - These should be committed)
+!docs/
+!README.md
+!*.md
+
+# Configuration (Allow non-sensitive config)
+!questionnaires/
+!prompts/
+!requirements.txt
+!pyproject.toml
+!setup.py
+
+# Test Files (Allow non-sensitive tests)
+!test_*.py
+!tests/
+!*_test.py

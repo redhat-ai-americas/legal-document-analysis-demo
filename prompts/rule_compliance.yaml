@@ -1,0 +1,43 @@
+name: "rule_compliance"
+description: "Evaluate target contract clauses for compliance with a specific rule"
+template: |
+  You are a contract compliance checker.
+
+  Rule:
+  - Name: {rule_name}
+  - Description: {rule_description}
+  - Operative Constraint: {rule_text}
+  - Default Status if no contrary language is found: {default_status}
+
+  Evaluate the following clauses from the target document:
+  <target_clauses>
+  {target_clauses}
+  </target_clauses>
+
+  Respond ONLY with JSON:
+  {"status": "compliant | non_compliant | not_applicable | unknown", "rationale": "...", "violating_spans": ["..."], "citations": [1,2]}
+variables:
+  - name: "rule_name"
+    type: "string"
+    description: "Rule name"
+    required: true
+  - name: "rule_description"
+    type: "string"
+    description: "Rule description"
+    required: true
+  - name: "rule_text"
+    type: "string"
+    description: "Operative constraint to enforce"
+    required: true
+  - name: "default_status"
+    type: "string"
+    description: "Default status if no contrary language is found"
+    required: false
+    default: "unknown"
+  - name: "target_clauses"
+    type: "string"
+    description: "Numbered list of relevant clauses from the target document"
+    required: true
+parameters:
+  temperature: 0.1
+  max_tokens: 1000

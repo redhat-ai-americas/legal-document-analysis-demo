@@ -1,0 +1,324 @@
+{
+  "rules": [
+    {
+      "id": "phi_use_restriction",
+      "name": "PHI Use and Disclosure Restriction",
+      "description": "Restrictions on use and disclosure of Protected Health Information",
+      "rule_text": "Business Associate must not use or disclose PHI other than as permitted in the BAA, under the Privacy Rule, or as required by law.",
+      "default_status": "non_compliant",
+      "severity": "critical",
+      "keywords": [
+        "PHI",
+        "protected health information",
+        "use",
+        "disclosure",
+        "privacy rule",
+        "permitted uses"
+      ],
+      "exceptions": ["As permitted under Privacy Rule or required by law"]
+    },
+    {
+      "id": "administrative_safeguards",
+      "name": "Administrative Safeguards",
+      "description": "Implementation of administrative safeguards for PHI protection",
+      "rule_text": "Business Associate must implement appropriate administrative safeguards including workforce training, privacy and security officials, and compliance policies.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "administrative safeguards",
+        "workforce training",
+        "privacy official",
+        "security official",
+        "policies",
+        "compliance program"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "technical_safeguards",
+      "name": "Technical and Physical Safeguards",
+      "description": "Implementation of technical and physical safeguards for PHI",
+      "rule_text": "Business Associate must implement appropriate technical and physical safeguards to protect confidentiality, integrity, and availability of PHI.",
+      "default_status": "non_compliant",
+      "severity": "critical",
+      "keywords": [
+        "technical safeguards",
+        "physical safeguards",
+        "confidentiality",
+        "integrity",
+        "availability",
+        "security rule"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "breach_notification",
+      "name": "Breach Notification Requirements",
+      "description": "Timely notification of breaches and security incidents",
+      "rule_text": "Business Associate must report to Covered Entity any unauthorized use/disclosure of PHI or security incidents within the specified breach notification period.",
+      "default_status": "non_compliant",
+      "severity": "critical",
+      "keywords": [
+        "breach",
+        "security incident",
+        "notification",
+        "reporting",
+        "unauthorized use",
+        "unauthorized disclosure"
+      ],
+      "exceptions": ["Unsuccessful unauthorized access attempts may be reported periodically"]
+    },
+    {
+      "id": "subcontractor_agreements",
+      "name": "Subcontractor Agreement Requirements",
+      "description": "Requirements for subcontractor agreements handling PHI",
+      "rule_text": "Business Associate must ensure subcontractors execute written agreements with terms substantially similar to and no less stringent than the BAA before disclosing PHI.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "subcontractor",
+        "downstream",
+        "written agreement",
+        "substantially similar",
+        "no less stringent",
+        "third party"
+      ],
+      "exceptions": ["Subject to applicable limitations"]
+    },
+    {
+      "id": "compliance_assessments",
+      "name": "Compliance Assessments",
+      "description": "Regular assessments of HIPAA compliance",
+      "rule_text": "Business Associate must conduct regular assessments of compliance with Privacy Rule and Security Rule obligations and make summaries available upon request.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "assessment",
+        "compliance review",
+        "audit",
+        "evaluation",
+        "privacy rule",
+        "security rule"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "individual_rights_support",
+      "name": "Individual Rights Support",
+      "description": "Support for individual HIPAA rights requests",
+      "rule_text": "Business Associate must support Covered Entity in completing individual rights requests (access, amendment, accounting) within 10 business days.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "individual rights",
+        "access",
+        "amendment",
+        "accounting of disclosures",
+        "patient rights",
+        "10 business days"
+      ],
+      "exceptions": ["Unless directed by Covered Entity or required by law"]
+    },
+    {
+      "id": "hhs_access",
+      "name": "HHS Access to Records",
+      "description": "Making records available to HHS for compliance determination",
+      "rule_text": "Business Associate must make books, records, and policies available to Secretary of HHS for determining HIPAA compliance.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "HHS",
+        "Secretary",
+        "Department of Health",
+        "government access",
+        "compliance determination",
+        "records"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "covered_entity_audit_rights",
+      "name": "Covered Entity Audit Rights",
+      "description": "Covered Entity's right to audit Business Associate compliance",
+      "rule_text": "Business Associate must make books, records, and policies relating to BAA compliance available to Covered Entity upon reasonable request.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "audit",
+        "audit rights",
+        "covered entity",
+        "books and records",
+        "compliance review"
+      ],
+      "exceptions": ["Not required if it would interfere with confidentiality or legal obligations"]
+    },
+    {
+      "id": "mitigation_obligations",
+      "name": "Mitigation Obligations",
+      "description": "Obligation to mitigate harmful effects of improper PHI use/disclosure",
+      "rule_text": "Business Associate must mitigate, to the extent practicable, any harmful effect of unauthorized use or disclosure of PHI and promptly communicate mitigation actions.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "mitigate",
+        "harmful effect",
+        "remediation",
+        "corrective action",
+        "minimize harm"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "data_retention_destruction",
+      "name": "PHI Retention and Destruction",
+      "description": "Requirements for PHI return or destruction upon termination",
+      "rule_text": "Upon termination, Business Associate must return or destroy all PHI at Covered Entity's discretion, retaining no copies unless directed or if return/destruction is infeasible.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "return",
+        "destroy",
+        "destruction",
+        "termination",
+        "retention",
+        "data disposal"
+      ],
+      "exceptions": ["If return/destruction infeasible, must continue BAA compliance for retained PHI"]
+    },
+    {
+      "id": "security_incident_reimbursement",
+      "name": "Security Incident Reimbursement",
+      "description": "Reimbursement for costs associated with Business Associate-caused incidents",
+      "rule_text": "Business Associate must reimburse Covered Entity for reasonable costs associated with security incidents caused by Business Associate or its subcontractors.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "reimburse",
+        "reimbursement",
+        "security incident",
+        "costs",
+        "damages",
+        "financial responsibility"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "offshoring_permission",
+      "name": "Offshoring PHI Permission",
+      "description": "Permission to use and disclose PHI outside the United States",
+      "rule_text": "Business Associate may be permitted to use and disclose PHI outside of the United States to provide services, subject to any applicable limitations.",
+      "default_status": "compliant",
+      "severity": "medium",
+      "keywords": [
+        "offshore",
+        "offshoring",
+        "outside United States",
+        "international",
+        "cross-border",
+        "foreign"
+      ],
+      "exceptions": ["Subject to applicable limitations"]
+    },
+    {
+      "id": "deidentification_rights",
+      "name": "De-identification Rights",
+      "description": "Rights to de-identify PHI",
+      "rule_text": "Business Associate may be permitted to de-identify PHI according to HIPAA standards, subject to any applicable limitations.",
+      "default_status": "compliant",
+      "severity": "low",
+      "keywords": [
+        "de-identify",
+        "de-identification",
+        "anonymize",
+        "remove identifiers"
+      ],
+      "exceptions": ["Subject to applicable limitations"]
+    },
+    {
+      "id": "aggregation_rights",
+      "name": "Aggregation Rights",
+      "description": "Rights to aggregate PHI for Business Associate's purposes",
+      "rule_text": "Business Associate may be permitted to aggregate PHI for its own purposes, subject to any applicable limitations.",
+      "default_status": "compliant",
+      "severity": "low",
+      "keywords": [
+        "aggregate",
+        "aggregation",
+        "combine data",
+        "data aggregation"
+      ],
+      "exceptions": ["Subject to applicable limitations"]
+    },
+    {
+      "id": "termination_for_breach",
+      "name": "Termination for Material Breach",
+      "description": "Right to terminate BAA for uncured material breach",
+      "rule_text": "Either party may terminate the BAA if the other party fails to cure a material breach within 30 days after notice. Material breach of BAA is material breach of underlying agreement.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "terminate",
+        "termination",
+        "material breach",
+        "cure period",
+        "30 days"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "covered_entity_obligations",
+      "name": "Covered Entity Obligations",
+      "description": "Covered Entity's obligations to notify of privacy practices and restrictions",
+      "rule_text": "Covered Entity must notify Business Associate of privacy practices, changes in PHI use/disclosure, and individual restrictions that impact Business Associate's obligations.",
+      "default_status": "non_compliant",
+      "severity": "medium",
+      "keywords": [
+        "covered entity obligations",
+        "privacy practices",
+        "notice",
+        "restrictions",
+        "individual restrictions"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "subcontractor_due_diligence",
+      "name": "Subcontractor Due Diligence",
+      "description": "Due diligence requirements for subcontractors",
+      "rule_text": "Business Associate must conduct appropriate due diligence on all subcontractors who will handle PHI.",
+      "default_status": "non_compliant",
+      "severity": "high",
+      "keywords": [
+        "due diligence",
+        "subcontractor",
+        "vendor assessment",
+        "third party review",
+        "vetting"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "breach_confidentiality",
+      "name": "Security Incident Confidentiality",
+      "description": "Confidentiality of security incident information",
+      "rule_text": "Business Associate must not disclose information related to a security incident except as required by applicable law.",
+      "default_status": "compliant",
+      "severity": "medium",
+      "keywords": [
+        "confidential",
+        "security incident",
+        "breach confidentiality",
+        "non-disclosure"
+      ],
+      "exceptions": ["As required by applicable law"]
+    }
+  ],
+  "metadata": {
+    "document_type": "Business Associate Agreement (BAA)",
+    "version": "1.0",
+    "created_date": "2024-12-19",
+    "description": "Compliance rules derived from standard BAA for assessing third-party business associate agreements under HIPAA",
+    "standard_version": "Common Paper BAA Standard Terms Version 1.0",
+    "regulatory_framework": "HIPAA (Health Insurance Portability and Accountability Act)"
+  }
+}

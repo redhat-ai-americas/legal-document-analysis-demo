@@ -1,0 +1,41 @@
+name: "agreement_type"
+description: "Identify the type of legal agreement from document context"
+template: |
+  Based on the following information, identify the type of agreement:
+  {context}
+
+  Question: {question}
+  Guideline: {guideline}
+
+  Analyze the filename, title, and document beginning to determine if this is a:
+  - Master Agreement (MSA)
+  - Statement of Work (SOW)
+  - Software as a Service (SaaS) Agreement
+  - Software License Agreement
+  - Purchase Order
+  - Amendment
+  - Order Form
+  - Service Agreement
+  - Other (specify)
+
+  Return your response as JSON:
+  {
+    "answer": "Type of agreement",
+    "reasoning": "Brief explanation of how you determined this"
+  }
+variables:
+  - name: "context"
+    type: "string"
+    description: "Document context including filename and title"
+    required: true
+  - name: "question"
+    type: "string"
+    description: "The question being asked"
+    required: true
+  - name: "guideline"
+    type: "string"
+    description: "Guideline for answering the question"
+    required: true
+parameters:
+  temperature: 0.1
+  max_tokens: 200

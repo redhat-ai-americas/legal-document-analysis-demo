@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: legal-doc-config
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: config
+data:
+  # Application configuration
+  USE_TEMPLATE_EXCEL: "true"
+  USE_ENHANCED_ATTRIBUTION: "true"
+  USE_SELECTIVE_LOGGING: "true"
+  RULES_MODE_ENABLED: "true"
+  DUAL_MODEL_ENABLED: "false"
+  
+  # API configuration
+  API_HOST: "0.0.0.0"
+  API_PORT: "8080"
+  
+  # UI configuration
+  STREAMLIT_PORT: "8501"
+  STREAMLIT_SERVER_ADDRESS: "0.0.0.0"
+  STREAMLIT_SERVER_HEADLESS: "true"
+  
+  # Logging configuration
+  LOG_LEVEL: "INFO"
+  PYTHONUNBUFFERED: "1"
+  
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: legal-doc-secrets
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: secrets
+type: Opaque
+stringData:
+  # Model API credentials (update with actual values)
+  GRANITE_INSTRUCT_API_KEY: "your-granite-api-key"
+  GRANITE_INSTRUCT_URL: "https://your-granite-endpoint"
+  GRANITE_INSTRUCT_MODEL_NAME: "granite-3-8b-instruct"

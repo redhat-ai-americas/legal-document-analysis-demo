@@ -1,0 +1,10 @@
+name: "preflight"
+description: "Prompts for testing model connectivity and capabilities during preflight check"
+basic_ok: |
+  Hello, this is a preflight connectivity test. Please respond with 'OK'.
+json_capability: |
+  Please respond with valid JSON in this exact format:
+  {"term": "test", "subsection": "This is a test response"}
+parameters:
+  temperature: 0.0
+  max_tokens: 50

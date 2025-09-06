@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: legal-doc-analysis
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - pvc.yaml
+  - rbac.yaml
+  - backend-deployment.yaml
+  - ui-deployment.yaml
+  - route.yaml
+  - buildconfig.yaml
+
+commonLabels:
+  app: legal-doc-analysis
+  version: v1
+  managed-by: kustomize
+
+images:
+  - name: legal-doc-backend
+    newName: image-registry.openshift-image-registry.svc:5000/legal-doc-analysis/legal-doc-backend
+    newTag: latest
+  - name: legal-doc-ui
+    newName: image-registry.openshift-image-registry.svc:5000/legal-doc-analysis/legal-doc-ui
+    newTag: latest

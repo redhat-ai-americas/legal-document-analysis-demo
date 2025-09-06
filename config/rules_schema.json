@@ -1,0 +1,231 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract Compliance Rule",
+  "description": "Schema for defining contract compliance rules with deterministic and LLM-based checks",
+  "type": "object",
+  "required": [
+    "rule_id",
+    "category",
+    "description",
+    "priority",
+    "evidence_requirements",
+    "compliance_levels"
+  ],
+  "properties": {
+    "rule_id": {
+      "type": "string",
+      "pattern": "^[A-Z]+-[0-9]{3}$",
+      "description": "Unique rule identifier (e.g., TERM-001)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "termination",
+        "payment",
+        "liability",
+        "intellectual_property",
+        "confidentiality",
+        "warranty",
+        "indemnification",
+        "governance",
+        "dispute_resolution",
+        "data_protection",
+        "compliance",
+        "performance"
+      ],
+      "description": "Rule category for organization"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Human-readable description of the rule"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Rule priority level"
+    },
+    "deterministic_checks": {
+      "type": "object",
+      "description": "Deterministic pattern matching configuration",
+      "properties": {
+        "required_keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Keywords that must be present"
+        },
+        "forbidden_keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Keywords that must not be present"
+        },
+        "regex_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Regular expression patterns to match"
+        },
+        "proximity_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["terms", "max_distance"],
+            "properties": {
+              "terms": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "description": "Terms that must appear near each other"
+              },
+              "max_distance": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Maximum word distance between terms"
+              }
+            }
+          },
+          "description": "Proximity-based matching rules"
+        },
+        "section_hints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Section titles where rule content is typically found"
+        }
+      }
+    },
+    "llm_prompt": {
+      "type": "string",
+      "description": "Prompt template for LLM evaluation when deterministic checks are inconclusive"
+    },
+    "llm_examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "status", "rationale"],
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Example contract text"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["compliant", "non_compliant", "not_applicable", "unknown"]
+          },
+          "rationale": {
+            "type": "string",
+            "description": "Explanation of the status"
+          }
+        }
+      },
+      "description": "Few-shot examples for LLM"
+    },
+    "evidence_requirements": {
+      "type": "object",
+      "required": ["min_citations", "require_page_anchors"],
+      "properties": {
+        "min_citations": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum number of citations required"
+        },
+        "require_page_anchors": {
+          "type": "boolean",
+          "description": "Whether page anchors are required in citations"
+        },
+        "max_citation_distance": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum character distance for relevant citations"
+        },
+        "require_exact_quotes": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether citations must be exact quotes from document"
+        }
+      }
+    },
+    "compliance_levels": {
+      "type": "object",
+      "required": ["compliant", "non_compliant", "not_applicable", "unknown"],
+      "properties": {
+        "compliant": {
+          "type": "string",
+          "description": "Description of compliant state"
+        },
+        "non_compliant": {
+          "type": "string",
+          "description": "Description of non-compliant state"
+        },
+        "not_applicable": {
+          "type": "string",
+          "description": "Description of when rule doesn't apply"
+        },
+        "unknown": {
+          "type": "string",
+          "description": "Description of unknown/undeterminable state"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Rule version (semantic versioning)"
+        },
+        "created_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Rule creation date"
+        },
+        "updated_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Last update date"
+        },
+        "author": {
+          "type": "string",
+          "description": "Rule author"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags for rule categorization"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "External references or standards"
+        }
+      }
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Risk level if non-compliant"
+    },
+    "remediation_guidance": {
+      "type": "string",
+      "description": "Guidance for addressing non-compliance"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this rule is currently active"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: legal-doc-backend
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: backend
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/your-org/legal-document-analysis.git
+      ref: main
+    contextDir: /
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Containerfile.backend
+      env:
+      - name: BUILD_LOGLEVEL
+        value: "5"
+  output:
+    to:
+      kind: ImageStreamTag
+      name: legal-doc-backend:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+  runPolicy: Serial
+  
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: legal-doc-ui
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: ui
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/your-org/legal-document-analysis.git
+      ref: main
+    contextDir: /
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Containerfile.ui
+      env:
+      - name: BUILD_LOGLEVEL
+        value: "5"
+  output:
+    to:
+      kind: ImageStreamTag
+      name: legal-doc-ui:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+  runPolicy: Serial
+  
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: legal-doc-backend
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: backend
+spec:
+  lookupPolicy:
+    local: true
+    
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: legal-doc-ui
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: ui
+spec:
+  lookupPolicy:
+    local: true

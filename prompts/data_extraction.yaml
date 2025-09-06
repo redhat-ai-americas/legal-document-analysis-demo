@@ -1,0 +1,21 @@
+name: "data_extraction"
+description: "Extract specific data from classified document context"
+template: |
+  You are a data extraction expert. Based on the following context, extract the answer for the question: '{question}'.
+
+  Context:
+  {context}
+
+  Answer:
+variables:
+  - name: "question"
+    type: "string"
+    description: "The specific question to extract an answer for"
+    required: true
+  - name: "context"
+    type: "string"
+    description: "The context from which to extract the answer"
+    required: true
+parameters:
+  temperature: 0.0
+  max_tokens: 500

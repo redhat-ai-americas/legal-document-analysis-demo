@@ -1,0 +1,24 @@
+name: "baseline_comparison"
+description: "This prompt is used to compare extracted contract terms against baseline standards and identify red flags."
+template: |
+  You are a senior legal analyst. Compare the 'Extracted Term' from a target contract against our 'Standard Term'. Identify any material deviations, risks, or dependencies. Provide a concise summary for a 'Red Flags' report.
+
+  STANDARD TERMS:
+  {baseline}
+
+  EXTRACTED TERMS:
+  {extracted}
+
+  Red Flags Summary:
+variables:
+  - name: "baseline"
+    type: "string"
+    description: "The baseline/standard terms to compare against"
+    required: true
+  - name: "extracted"
+    type: "string"
+    description: "The extracted terms from the target contract"
+    required: true
+parameters:
+  temperature: 0.1
+  max_tokens: 1000

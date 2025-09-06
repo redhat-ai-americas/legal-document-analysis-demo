@@ -1,0 +1,54 @@
+# Document Sets Configuration
+# Defines predefined sets of documents for quick analysis
+
+document_sets:
+  ai_addendum:
+    name: "AI Services Addendum"
+    description: "AI services agreement templates and compliance rules"
+    reference_document: "sample_documents/standard_docs/ai_addendum/AI-Addendum.md"
+    rules_file: "sample_documents/standard_docs/ai_addendum/ai_addendum_rules.json"
+    target_documents:
+      - name: "AI Services Addendum (August)"
+        path: "sample_documents/target_docs/ai_addendum/AI-Services-Addendum-for-Procurement-Contracts-Aug.pdf"
+        description: "Vendor AI services addendum from August"
+      # Add more target documents here as they become available
+
+  baa:
+    name: "Business Associate Agreement (BAA)"
+    description: "HIPAA Business Associate Agreement templates and rules"
+    reference_document: "sample_documents/standard_docs/baa/BAA-Template.md"
+    rules_file: "sample_documents/standard_docs/baa/baa_rules.json"
+    target_documents:
+      - name: "Vendor BAA v1"
+        path: "sample_documents/target_docs/baa/Vendor-BAA.pdf"
+        description: "Vendor's business associate agreement"
+      # Add more target documents here
+
+  software_license:
+    name: "Software License Agreement"
+    description: "Software licensing terms and compliance rules"
+    reference_document: "sample_documents/standard_docs/software_license/Software-License-Template.md"
+    rules_file: "sample_documents/standard_docs/software_license/software_license_rules.json"
+    target_documents:
+      - name: "Enterprise License Agreement"
+        path: "sample_documents/target_docs/software_license/Enterprise-License.pdf"
+        description: "Enterprise software license agreement"
+      # Add more target documents here
+
+# Configuration for future expansion
+settings:
+  allow_custom_upload: true  # Allow drag-and-drop alongside presets
+  show_descriptions: true    # Show descriptions in UI
+  group_by_category: true    # Group document sets by type
+  
+# Categories for future organization
+categories:
+  - id: "legal"
+    name: "Legal Agreements"
+    sets: ["baa", "software_license"]
+  - id: "technology"
+    name: "Technology Contracts"
+    sets: ["ai_addendum", "software_license"]
+  - id: "compliance"
+    name: "Compliance Documents"
+    sets: ["baa", "ai_addendum"]

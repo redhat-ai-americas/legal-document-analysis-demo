@@ -1,0 +1,90 @@
+# Feature Flags Configuration
+# Controls gradual rollout of v2 architecture features
+
+features:
+  # Model abstraction layer
+  v2_model_client:
+    enabled: false
+    description: "Use new ModelClient abstraction instead of direct API calls"
+    rollout_percentage: 0
+    
+  # Enhanced classification system  
+  multi_label_classification:
+    enabled: false
+    description: "Enable multi-label sentence classification"
+    rollout_percentage: 0
+    max_labels_per_sentence: 5
+    
+  # Hybrid retrieval system
+  hybrid_retrieval:
+    enabled: false
+    description: "Use BM25 + embedding hybrid retrieval"
+    rollout_percentage: 0
+    hybrid_alpha: 0.5  # Weight for embedding similarity
+    
+  # Embedding support
+  use_embeddings:
+    enabled: false
+    description: "Enable Granite embeddings for retrieval"
+    rollout_percentage: 0
+    
+  # Rules improvements
+  deterministic_rules:
+    enabled: false
+    description: "Use deterministic pattern matching before LLM"
+    rollout_percentage: 0
+    
+  # Evidence requirements
+  strict_citations:
+    enabled: false
+    description: "Require page-anchored citations for all verdicts"
+    rollout_percentage: 0
+    
+  # Auditor agent
+  auditor_validation:
+    enabled: false
+    description: "Enable auditor agent for output validation"
+    rollout_percentage: 0
+    
+  # Page anchors
+  page_anchors:
+    enabled: false
+    description: "Preserve and use page anchors throughout pipeline"
+    rollout_percentage: 0
+    
+  # Schema enforcement
+  strict_json_schemas:
+    enabled: false
+    description: "Enforce strict JSON schemas with retries"
+    rollout_percentage: 0
+    max_retries: 3
+    
+  # Performance optimizations
+  parallel_processing:
+    enabled: false
+    description: "Enable parallel processing where applicable"
+    rollout_percentage: 0
+    
+  # Caching improvements
+  enhanced_caching:
+    enabled: false
+    description: "Use enhanced caching for retrieval and embeddings"
+    rollout_percentage: 0
+    
+# Rollout configuration
+rollout:
+  # Method for determining if a feature is enabled for a request
+  # Options: percentage, user_list, always_on, always_off
+  method: "percentage"
+  
+  # Seed for consistent rollout (optional)
+  seed: ""
+  
+  # Users/documents that always get new features (for testing)
+  always_enabled_for:
+    - "test_document.pdf"
+    - "development_mode"
+    
+  # Users/documents that never get new features (safety)
+  always_disabled_for:
+    - "production_critical.pdf"

@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legal-doc-backend
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: backend
+    app.kubernetes.io/name: legal-doc-backend
+    app.kubernetes.io/part-of: legal-doc-analysis
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: legal-doc-analysis
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: legal-doc-analysis
+        component: backend
+        version: v1
+    spec:
+      serviceAccountName: legal-doc-sa
+      containers:
+      - name: backend
+        image: image-registry.openshift-image-registry.svc:5000/legal-doc-analysis/legal-doc-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: http
+        env:
+        - name: PYTHONPATH
+          value: "/app"
+        envFrom:
+        - configMapRef:
+            name: legal-doc-config
+        - secretRef:
+            name: legal-doc-secrets
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 5
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+        - name: logs
+          mountPath: /app/logs
+        - name: samples
+          mountPath: /app/sample_documents
+          readOnly: true
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: legal-doc-data
+      - name: logs
+        persistentVolumeClaim:
+          claimName: legal-doc-logs
+      - name: samples
+        persistentVolumeClaim:
+          claimName: legal-doc-samples
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: component
+                  operator: In
+                  values:
+                  - backend
+              topologyKey: kubernetes.io/hostname
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: legal-doc-backend
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: backend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: legal-doc-analysis
+    component: backend

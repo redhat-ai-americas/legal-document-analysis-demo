@@ -1,0 +1,31 @@
+name: "classifier_batch"
+description: "Batch classification of multiple sentences for efficient processing"
+system_message: |
+  You are a contract classification model. For each input sentence, assign ALL applicable labels from the allowed set.
+user_message_template: |
+  Classify each numbered sentence. Respond with ONLY valid JSON (no prose).
+  Schema: [ {"sentence_id": N, "classes": [array of strings], "subsection": "short excerpt or """} ].
+  Rules:
+  - classes must be one or more of the allowed labels; use "none" ONLY if no labels apply.
+  - Allowed labels are:
+  {term_list}
+  - Do not invent labels.
+
+  Sentences to classify:
+  {sentences_text}
+error_correction_message: |
+  Reminder: Return ONLY JSON list with objects containing sentence_id, classes (array), and subsection.
+  Classes must be from allowed labels; if none apply, use ["none"].
+variables:
+  - name: "term_list"
+    type: "string"
+    description: "Formatted list of allowed classification terms"
+    required: true
+  - name: "sentences_text"
+    type: "string"
+    description: "Numbered list of sentences to classify"
+    required: true
+parameters:
+  temperature: 0.0
+  max_tokens: 2048
+  max_retries: 3

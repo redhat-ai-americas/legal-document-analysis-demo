@@ -1,0 +1,46 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: legal-doc-ui
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: ui
+  annotations:
+    haproxy.router.openshift.io/timeout: 600s
+    router.openshift.io/cookie_name: legal-doc-session
+spec:
+  to:
+    kind: Service
+    name: legal-doc-ui
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+  
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: legal-doc-api
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: backend
+  annotations:
+    haproxy.router.openshift.io/timeout: 600s
+spec:
+  path: /api
+  to:
+    kind: Service
+    name: legal-doc-backend
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

@@ -1,0 +1,28 @@
+# Core Libraries
+pandas
+langchain
+langgraph
+pydantic
+
+# Document Loading & Processing
+pypdf
+pdfplumber  # Enhanced PDF fallback library
+pymupdf  # Alternative PDF processing library (fitz)
+
+# LLM Integrations (example using OpenAI)
+langchain-openai
+langchain-community
+
+# Enhanced Error Handling and Resilience
+requests  # For API resilience
+python-dateutil  # For timestamp handling 
+
+# Utilities
+python-dotenv
+pyyaml
+tiktoken  # For token counting
+argparse  # Command line argument parsing
+openpyxl  # Excel file writing
+
+docling
+streamlit

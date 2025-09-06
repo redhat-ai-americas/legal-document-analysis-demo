@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: legal-doc-data
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: storage
+spec:
+  accessModes:
+    - ReadWriteMany  # RWX for shared access between pods
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ocs-storagecluster-cephfs  # Adjust based on your OpenShift storage class
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: legal-doc-logs
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: storage
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ocs-storagecluster-cephfs
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: legal-doc-samples
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: storage
+spec:
+  accessModes:
+    - ReadOnlyMany  # ROX for sample documents
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: ocs-storagecluster-cephfs

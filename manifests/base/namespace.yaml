@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    environment: base
+  annotations:
+    openshift.io/description: "Legal Document Analysis Platform"
+    openshift.io/display-name: "Legal Doc Analysis"

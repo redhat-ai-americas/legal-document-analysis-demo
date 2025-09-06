@@ -1,0 +1,55 @@
+# UI service Containerfile
+FROM registry.redhat.io/ubi9/python-311:latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install streamlit
+
+# Copy only necessary files for UI
+COPY ui/ ./ui/
+COPY config/ ./config/
+COPY sample_documents/ ./sample_documents/
+COPY workflows/ ./workflows/
+COPY nodes/ ./nodes/
+COPY utils/ ./utils/
+COPY prompts/ ./prompts/
+COPY questionnaires/ ./questionnaires/
+
+# Create necessary directories
+RUN mkdir -p /app/data/output/runs \
+    /app/data/output/comparisons \
+    /app/logs
+
+# Set permissions for OpenShift
+RUN chgrp -R 0 /app && \
+    chmod -R g=u /app && \
+    chmod -R 775 /app/data /app/logs
+
+# Expose Streamlit port
+EXPOSE 8501
+
+# Use non-root user
+USER 1001
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+# Streamlit configuration
+RUN mkdir -p ~/.streamlit && \
+    echo "[server]" > ~/.streamlit/config.toml && \
+    echo "port = 8501" >> ~/.streamlit/config.toml && \
+    echo "address = '0.0.0.0'" >> ~/.streamlit/config.toml && \
+    echo "headless = true" >> ~/.streamlit/config.toml && \
+    echo "enableCORS = false" >> ~/.streamlit/config.toml && \
+    echo "enableXsrfProtection = false" >> ~/.streamlit/config.toml
+
+# Run Streamlit
+CMD ["streamlit", "run", "ui/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]

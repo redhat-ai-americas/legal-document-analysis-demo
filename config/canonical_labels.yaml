@@ -1,0 +1,402 @@
+# Canonical Label Taxonomy
+# Defines the standard labels and their hierarchies for contract classification
+
+labels:
+  # Contract Lifecycle
+  TERMINATION:
+    category: CONTRACT_LIFECYCLE
+    aliases:
+      - termination
+      - terminate
+      - ending
+      - end
+      - cancellation
+      - cancel
+      - exit
+      - expiration
+      - expire
+      - dissolution
+    description: "Clauses related to contract termination, ending, or cancellation"
+    keywords:
+      - terminate
+      - cancel
+      - expire
+      - end
+      - dissolution
+      - exit clause
+      
+  RENEWAL:
+    category: CONTRACT_LIFECYCLE
+    aliases:
+      - renewal
+      - renew
+      - extension
+      - extend
+      - continuation
+      - auto-renewal
+      - evergreen
+    description: "Clauses about contract renewal or extension"
+    keywords:
+      - renew
+      - extend
+      - continue
+      - automatic renewal
+      - evergreen
+      
+  AMENDMENT:
+    category: CONTRACT_LIFECYCLE
+    aliases:
+      - amendment
+      - modification
+      - change
+      - alter
+      - revise
+      - addendum
+    description: "Clauses about modifying or amending the contract"
+    keywords:
+      - amend
+      - modify
+      - change
+      - alter
+      - revise
+      
+  # Financial Terms
+  PAYMENT:
+    category: FINANCIAL
+    aliases:
+      - payment
+      - compensation
+      - remuneration
+      - fee
+      - cost
+      - price
+      - billing
+      - invoice
+    description: "Payment terms, amounts, and schedules"
+    keywords:
+      - pay
+      - fee
+      - cost
+      - price
+      - invoice
+      - billing
+      
+  PENALTY:
+    category: FINANCIAL
+    aliases:
+      - penalty
+      - fine
+      - liquidated damages
+      - damages
+      - late fee
+      - interest
+    description: "Penalties, fines, and damages"
+    keywords:
+      - penalty
+      - fine
+      - damages
+      - late fee
+      - interest
+      
+  # Governance
+  DISPUTE_RESOLUTION:
+    category: GOVERNANCE
+    aliases:
+      - dispute resolution
+      - arbitration
+      - mediation
+      - litigation
+      - disputes
+      - conflict resolution
+    description: "How disputes will be resolved"
+    keywords:
+      - arbitration
+      - mediation
+      - litigation
+      - dispute
+      - conflict
+      
+  GOVERNING_LAW:
+    category: GOVERNANCE
+    aliases:
+      - governing law
+      - applicable law
+      - jurisdiction
+      - choice of law
+      - legal jurisdiction
+    description: "Which laws govern the contract"
+    keywords:
+      - governing law
+      - jurisdiction
+      - applicable law
+      - choice of law
+      
+  # Obligations
+  CONFIDENTIALITY:
+    category: OBLIGATIONS
+    aliases:
+      - confidentiality
+      - confidential
+      - non-disclosure
+      - nda
+      - proprietary
+      - secret
+    description: "Confidentiality and non-disclosure obligations"
+    keywords:
+      - confidential
+      - proprietary
+      - non-disclosure
+      - secret
+      - nda
+      
+  WARRANTY:
+    category: OBLIGATIONS
+    aliases:
+      - warranty
+      - guarantee
+      - warrants
+      - representation
+      - assurance
+    description: "Warranties and guarantees"
+    keywords:
+      - warranty
+      - guarantee
+      - warrant
+      - represent
+      - assure
+      
+  INDEMNIFICATION:
+    category: OBLIGATIONS
+    aliases:
+      - indemnification
+      - indemnify
+      - hold harmless
+      - defend
+      - indemnity
+    description: "Indemnification and hold harmless clauses"
+    keywords:
+      - indemnify
+      - hold harmless
+      - defend
+      - indemnification
+      
+  LIABILITY:
+    category: OBLIGATIONS
+    aliases:
+      - liability
+      - limitation of liability
+      - liable
+      - responsibility
+      - cap
+    description: "Liability terms and limitations"
+    keywords:
+      - liability
+      - liable
+      - responsible
+      - limit
+      - cap
+      
+  # Intellectual Property
+  INTELLECTUAL_PROPERTY:
+    category: IP_RIGHTS
+    aliases:
+      - intellectual property
+      - ip
+      - copyright
+      - patent
+      - trademark
+      - trade secret
+    description: "Intellectual property rights and ownership"
+    keywords:
+      - intellectual property
+      - copyright
+      - patent
+      - trademark
+      - ip
+      
+  LICENSE:
+    category: IP_RIGHTS
+    aliases:
+      - license
+      - licensing
+      - sublicense
+      - use rights
+      - permission
+    description: "Licensing terms and permissions"
+    keywords:
+      - license
+      - sublicense
+      - permission
+      - use rights
+      
+  # Performance
+  DELIVERABLES:
+    category: PERFORMANCE
+    aliases:
+      - deliverables
+      - delivery
+      - milestones
+      - outputs
+      - results
+    description: "What will be delivered"
+    keywords:
+      - deliver
+      - milestone
+      - output
+      - result
+      
+  SERVICE_LEVEL:
+    category: PERFORMANCE
+    aliases:
+      - service level
+      - sla
+      - performance standards
+      - uptime
+      - availability
+    description: "Service levels and performance standards"
+    keywords:
+      - sla
+      - service level
+      - uptime
+      - availability
+      - performance
+      
+  # Compliance
+  REGULATORY:
+    category: COMPLIANCE
+    aliases:
+      - regulatory
+      - regulation
+      - compliance
+      - legal requirements
+      - statutory
+    description: "Regulatory and compliance requirements"
+    keywords:
+      - regulatory
+      - compliance
+      - regulation
+      - statutory
+      
+  DATA_PROTECTION:
+    category: COMPLIANCE
+    aliases:
+      - data protection
+      - privacy
+      - gdpr
+      - data privacy
+      - personal data
+    description: "Data protection and privacy requirements"
+    keywords:
+      - data protection
+      - privacy
+      - gdpr
+      - personal data
+      
+  # Miscellaneous
+  FORCE_MAJEURE:
+    category: MISCELLANEOUS
+    aliases:
+      - force majeure
+      - act of god
+      - unforeseeable circumstances
+      - beyond control
+    description: "Force majeure and unforeseeable events"
+    keywords:
+      - force majeure
+      - act of god
+      - beyond control
+      
+  NOTICE:
+    category: MISCELLANEOUS
+    aliases:
+      - notice
+      - notification
+      - communication
+      - inform
+      - notify
+    description: "Notice and communication requirements"
+    keywords:
+      - notice
+      - notify
+      - inform
+      - communication
+      
+  ASSIGNMENT:
+    category: MISCELLANEOUS
+    aliases:
+      - assignment
+      - transfer
+      - assign
+      - delegation
+      - succession
+    description: "Assignment and transfer rights"
+    keywords:
+      - assign
+      - transfer
+      - delegate
+      - succession
+
+# Categories hierarchy
+categories:
+  CONTRACT_LIFECYCLE:
+    name: "Contract Lifecycle"
+    description: "Terms related to the lifecycle of the contract"
+    priority: 1
+    
+  FINANCIAL:
+    name: "Financial Terms"
+    description: "Payment, costs, and financial obligations"
+    priority: 2
+    
+  GOVERNANCE:
+    name: "Governance"
+    description: "How the contract is governed and disputes resolved"
+    priority: 3
+    
+  OBLIGATIONS:
+    name: "Obligations & Liabilities"
+    description: "Duties, warranties, and liability terms"
+    priority: 4
+    
+  IP_RIGHTS:
+    name: "Intellectual Property"
+    description: "IP ownership and licensing"
+    priority: 5
+    
+  PERFORMANCE:
+    name: "Performance"
+    description: "Deliverables and service levels"
+    priority: 6
+    
+  COMPLIANCE:
+    name: "Compliance"
+    description: "Regulatory and data protection"
+    priority: 7
+    
+  MISCELLANEOUS:
+    name: "Miscellaneous"
+    description: "Other important terms"
+    priority: 8
+
+# Mapping rules for edge cases
+special_mappings:
+  # Compound terms that should map to multiple labels
+  "termination for cause":
+    - TERMINATION
+    - DISPUTE_RESOLUTION
+    
+  "payment upon termination":
+    - PAYMENT
+    - TERMINATION
+    
+  "confidential information":
+    - CONFIDENTIALITY
+    - INTELLECTUAL_PROPERTY
+    
+  "warranty disclaimer":
+    - WARRANTY
+    - LIABILITY
+    
+  "indemnification cap":
+    - INDEMNIFICATION
+    - LIABILITY

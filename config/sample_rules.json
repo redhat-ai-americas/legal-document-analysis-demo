@@ -1,0 +1,268 @@
+[
+  {
+    "rule_id": "TERM-001",
+    "category": "termination",
+    "description": "Contract must specify clear termination conditions and notice period",
+    "priority": "high",
+    "deterministic_checks": {
+      "required_keywords": ["termination", "terminate", "end", "expir"],
+      "forbidden_keywords": [],
+      "regex_patterns": [
+        "\\d+\\s*(days?|months?|years?)\\s*(notice|prior|advance)",
+        "terminat\\w*\\s+(with|upon|by|after)",
+        "notice\\s+period\\s+of\\s+\\d+"
+      ],
+      "proximity_rules": [
+        {
+          "terms": ["termination", "notice"],
+          "max_distance": 50
+        },
+        {
+          "terms": ["terminate", "days"],
+          "max_distance": 30
+        }
+      ],
+      "section_hints": ["termination", "term", "duration", "expiration"]
+    },
+    "llm_prompt": "Analyze this contract text and determine if it clearly specifies termination conditions. Look for: 1) Termination triggers or events, 2) Notice period requirements, 3) Termination procedures. Provide specific quotes.",
+    "llm_examples": [
+      {
+        "text": "Either party may terminate this agreement upon thirty (30) days prior written notice to the other party.",
+        "status": "compliant",
+        "rationale": "Clear termination clause with specific 30-day notice period"
+      },
+      {
+        "text": "This agreement shall continue until terminated.",
+        "status": "non_compliant",
+        "rationale": "Vague termination clause without specific conditions or notice period"
+      }
+    ],
+    "evidence_requirements": {
+      "min_citations": 1,
+      "require_page_anchors": true,
+      "max_citation_distance": 500,
+      "require_exact_quotes": true
+    },
+    "compliance_levels": {
+      "compliant": "Contract has clear termination clause with specific notice period and procedures",
+      "non_compliant": "No termination clause or vague/ambiguous termination conditions",
+      "not_applicable": "Document type does not require termination provisions (e.g., one-time purchase order)",
+      "unknown": "Cannot determine termination provisions from available text"
+    },
+    "risk_level": "high",
+    "remediation_guidance": "Add specific termination clause including: triggering events, notice period (typically 30-90 days), and termination procedures",
+    "metadata": {
+      "version": "1.0.0",
+      "created_date": "2024-01-15",
+      "author": "Legal Compliance Team",
+      "tags": ["contract-lifecycle", "exit-clause"],
+      "references": ["ISO 37500", "Contract Best Practices Guide"]
+    },
+    "enabled": true
+  },
+  {
+    "rule_id": "PAY-001",
+    "category": "payment",
+    "description": "Contract must specify payment terms including amount, schedule, and method",
+    "priority": "critical",
+    "deterministic_checks": {
+      "required_keywords": ["payment", "pay", "fee", "cost", "price", "invoice", "billing"],
+      "forbidden_keywords": [],
+      "regex_patterns": [
+        "\\$\\s*[\\d,]+(\\.\\d{2})?",
+        "USD\\s*[\\d,]+",
+        "\\d+\\s*(percent|%)\\s",
+        "net\\s*\\d+",
+        "due\\s+(within|upon|in)\\s+\\d+"
+      ],
+      "proximity_rules": [
+        {
+          "terms": ["payment", "due"],
+          "max_distance": 40
+        },
+        {
+          "terms": ["invoice", "days"],
+          "max_distance": 20
+        }
+      ],
+      "section_hints": ["payment", "compensation", "fees", "pricing", "billing"]
+    },
+    "llm_prompt": "Analyze this contract for payment terms. Identify: 1) Payment amounts or calculation methods, 2) Payment schedule/milestones, 3) Payment methods, 4) Due dates or terms (e.g., Net 30). Provide specific quotes.",
+    "evidence_requirements": {
+      "min_citations": 2,
+      "require_page_anchors": true,
+      "max_citation_distance": 1000,
+      "require_exact_quotes": true
+    },
+    "compliance_levels": {
+      "compliant": "Clear payment terms including amount, schedule, and payment method",
+      "non_compliant": "Missing or incomplete payment terms",
+      "not_applicable": "Non-commercial agreement without payment obligations",
+      "unknown": "Payment terms cannot be determined from available text"
+    },
+    "risk_level": "critical",
+    "remediation_guidance": "Specify: payment amount or rate, payment schedule/milestones, payment method, and payment terms (e.g., Net 30)",
+    "metadata": {
+      "version": "1.0.0",
+      "created_date": "2024-01-15",
+      "author": "Finance Compliance Team",
+      "tags": ["financial", "payment-processing"],
+      "references": ["Payment Terms Standard", "Finance Policy Manual"]
+    },
+    "enabled": true
+  },
+  {
+    "rule_id": "LIAB-001",
+    "category": "liability",
+    "description": "Contract must address limitation of liability and damages caps",
+    "priority": "high",
+    "deterministic_checks": {
+      "required_keywords": ["liability", "liable", "damages", "loss"],
+      "forbidden_keywords": [],
+      "regex_patterns": [
+        "limit\\w*\\s+(of|on)\\s+liability",
+        "in no event shall.*exceed",
+        "maximum\\s+liability",
+        "consequential\\s+damages",
+        "indirect\\s+damages"
+      ],
+      "proximity_rules": [
+        {
+          "terms": ["liability", "limited"],
+          "max_distance": 30
+        },
+        {
+          "terms": ["damages", "excluded"],
+          "max_distance": 40
+        }
+      ],
+      "section_hints": ["liability", "limitation", "damages", "indemnification"]
+    },
+    "llm_prompt": "Review this contract for liability provisions. Identify: 1) Liability limitations or caps, 2) Excluded damages (consequential, indirect), 3) Exceptions to limitations. Provide specific quotes.",
+    "evidence_requirements": {
+      "min_citations": 1,
+      "require_page_anchors": true,
+      "max_citation_distance": 800,
+      "require_exact_quotes": true
+    },
+    "compliance_levels": {
+      "compliant": "Contract includes liability limitations with clear caps and exclusions",
+      "non_compliant": "No liability limitations or unlimited liability exposure",
+      "not_applicable": "Agreement type does not typically include liability provisions",
+      "unknown": "Liability provisions cannot be determined"
+    },
+    "risk_level": "high",
+    "remediation_guidance": "Include limitation of liability clause with: damage caps, exclusion of consequential damages, and any exceptions",
+    "metadata": {
+      "version": "1.0.0",
+      "created_date": "2024-01-15",
+      "author": "Risk Management Team",
+      "tags": ["risk", "liability-management"],
+      "references": ["Risk Management Guidelines", "Liability Standards"]
+    },
+    "enabled": true
+  },
+  {
+    "rule_id": "CONF-001",
+    "category": "confidentiality",
+    "description": "Contract must include confidentiality and non-disclosure provisions",
+    "priority": "high",
+    "deterministic_checks": {
+      "required_keywords": ["confidential", "proprietary", "non-disclosure", "nda"],
+      "forbidden_keywords": [],
+      "regex_patterns": [
+        "confidential\\s+information",
+        "proprietary\\s+information",
+        "shall\\s+(not|remain)\\s+confidential",
+        "non-?disclosure",
+        "trade\\s+secret"
+      ],
+      "proximity_rules": [
+        {
+          "terms": ["confidential", "information"],
+          "max_distance": 10
+        },
+        {
+          "terms": ["disclosure", "prohibited"],
+          "max_distance": 30
+        }
+      ],
+      "section_hints": ["confidentiality", "non-disclosure", "proprietary", "confidential information"]
+    },
+    "llm_prompt": "Analyze confidentiality provisions in this contract. Identify: 1) Definition of confidential information, 2) Obligations regarding confidential information, 3) Duration of confidentiality, 4) Exceptions. Provide quotes.",
+    "evidence_requirements": {
+      "min_citations": 1,
+      "require_page_anchors": true,
+      "max_citation_distance": 600,
+      "require_exact_quotes": true
+    },
+    "compliance_levels": {
+      "compliant": "Comprehensive confidentiality provisions with clear definitions and obligations",
+      "non_compliant": "No confidentiality provisions or inadequate protection",
+      "not_applicable": "Public or open-source agreement without confidentiality requirements",
+      "unknown": "Confidentiality provisions cannot be determined"
+    },
+    "risk_level": "high",
+    "remediation_guidance": "Add confidentiality clause defining: confidential information, protection obligations, duration, and standard exceptions",
+    "metadata": {
+      "version": "1.0.0",
+      "created_date": "2024-01-15",
+      "author": "Information Security Team",
+      "tags": ["security", "information-protection"],
+      "references": ["Information Security Policy", "NDA Standards"]
+    },
+    "enabled": true
+  },
+  {
+    "rule_id": "DISP-001",
+    "category": "dispute_resolution",
+    "description": "Contract must specify dispute resolution mechanism",
+    "priority": "medium",
+    "deterministic_checks": {
+      "required_keywords": ["dispute", "arbitration", "mediation", "litigation", "court", "jurisdiction"],
+      "forbidden_keywords": [],
+      "regex_patterns": [
+        "dispute\\s+resolution",
+        "governing\\s+law",
+        "arbitrat\\w+",
+        "mediat\\w+",
+        "exclusive\\s+jurisdiction",
+        "courts?\\s+of\\s+\\w+"
+      ],
+      "proximity_rules": [
+        {
+          "terms": ["dispute", "resolved"],
+          "max_distance": 40
+        },
+        {
+          "terms": ["governing", "law"],
+          "max_distance": 5
+        }
+      ],
+      "section_hints": ["dispute", "governing law", "jurisdiction", "arbitration", "legal"]
+    },
+    "llm_prompt": "Review dispute resolution provisions. Identify: 1) Dispute resolution method (arbitration/litigation/mediation), 2) Governing law, 3) Jurisdiction/venue, 4) Escalation procedures. Provide quotes.",
+    "evidence_requirements": {
+      "min_citations": 1,
+      "require_page_anchors": true,
+      "max_citation_distance": 500,
+      "require_exact_quotes": true
+    },
+    "compliance_levels": {
+      "compliant": "Clear dispute resolution mechanism with governing law and jurisdiction",
+      "non_compliant": "No dispute resolution provisions specified",
+      "not_applicable": "Internal agreement without external dispute potential",
+      "unknown": "Dispute resolution provisions cannot be determined"
+    },
+    "risk_level": "medium",
+    "remediation_guidance": "Specify: dispute resolution method, governing law, jurisdiction/venue, and any escalation procedures",
+    "metadata": {
+      "version": "1.0.0",
+      "created_date": "2024-01-15",
+      "author": "Legal Team",
+      "tags": ["legal", "dispute-management"],
+      "references": ["Dispute Resolution Guidelines", "Legal Standards"]
+    },
+    "enabled": true
+  }
+]

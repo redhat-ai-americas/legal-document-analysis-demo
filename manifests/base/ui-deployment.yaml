@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legal-doc-ui
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: ui
+    app.kubernetes.io/name: legal-doc-ui
+    app.kubernetes.io/part-of: legal-doc-analysis
+spec:
+  replicas: 1  # Streamlit maintains session state, so typically single replica
+  selector:
+    matchLabels:
+      app: legal-doc-analysis
+      component: ui
+  template:
+    metadata:
+      labels:
+        app: legal-doc-analysis
+        component: ui
+        version: v1
+    spec:
+      serviceAccountName: legal-doc-sa
+      containers:
+      - name: ui
+        image: image-registry.openshift-image-registry.svc:5000/legal-doc-analysis/legal-doc-ui:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8501
+          protocol: TCP
+          name: http
+        env:
+        - name: PYTHONPATH
+          value: "/app"
+        - name: BACKEND_URL
+          value: "http://legal-doc-backend:8080"
+        envFrom:
+        - configMapRef:
+            name: legal-doc-config
+        - secretRef:
+            name: legal-doc-secrets
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 45
+          periodSeconds: 30
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+        - name: logs
+          mountPath: /app/logs
+        - name: samples
+          mountPath: /app/sample_documents
+          readOnly: true
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: legal-doc-data
+      - name: logs
+        persistentVolumeClaim:
+          claimName: legal-doc-logs
+      - name: samples
+        persistentVolumeClaim:
+          claimName: legal-doc-samples
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: legal-doc-ui
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: ui
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8501
+    targetPort: 8501
+    protocol: TCP
+    name: http
+  selector:
+    app: legal-doc-analysis
+    component: ui

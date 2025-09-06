@@ -1,0 +1,112 @@
+# Contract Evaluation Questionnaire
+# Streamlined version that complements the rules-based evaluation system.
+# Rule-specific items have been moved to rules files.
+
+contract_evaluation:
+  part_1_document_information:
+    title: "Document & Reviewer Information"
+    questions:
+      - id: document_name
+        prompt: "What is the official name or title of the document being reviewed?"
+        guideline: "Use the document's full title as it appears on the page."
+        answer: ""
+      - id: reviewer_name
+        prompt: "Who is conducting this review?"
+        guideline: "Enter your full name or 'Automated Analysis' for system reviews."
+        answer: ""
+      - id: target_company_name
+        prompt: "What is the name of the target company?"
+        guideline: "Use the legal name of the company being acquired or reviewed."
+        answer: ""
+      - id: counterparty_name
+        prompt: "What is the name of the other party to the contract?"
+        guideline: "Use the other party's full legal name. Note if it's a Customer, Partner, etc."
+        answer: ""
+      - id: datasite_location
+        prompt: "Where is the document stored (e.g., folder path, URL)?"
+        guideline: "Provide a direct link or the exact folder path for easy retrieval."
+        answer: ""
+      - id: contract_start_date
+        prompt: "When does the contract term begin?"
+        guideline: "Use YYYY-MM-DD format. If not specified, note as 'Not Stated'."
+        answer: ""
+      - id: contract_end_date
+        prompt: "When does the contract term end?"
+        guideline: "Use YYYY-MM-DD format. Note if auto-renewing or perpetual."
+        answer: ""
+      - id: agreement_type
+        prompt: "What type of agreement is this (e.g., Master Agreement, SOW, SaaS)?"
+        guideline: "Categorize the agreement. Examples: Master, SOW, SaaS, Amendment, Order Form, License, Services, NDA."
+        answer: ""
+      - id: based_on_standard_terms
+        prompt: "Is this contract on the target's standard terms?"
+        guideline: "Answer 'Target Standard', 'Third-Party Paper', or 'Hybrid'."
+        answer: ""
+      - id: contract_value
+        prompt: "What is the total contract value or annual value if recurring?"
+        guideline: "Include currency. If not specified, note as 'Not Stated'."
+        answer: ""
+      - id: payment_terms
+        prompt: "What are the payment terms?"
+        guideline: "Note payment schedule, net terms (e.g., Net 30), and any special conditions."
+        answer: ""
+      - id: governing_law
+        prompt: "What governing law applies to this contract?"
+        guideline: "Specify the jurisdiction (e.g., 'Delaware law', 'English law')."
+        answer: ""
+      - id: dispute_resolution
+        prompt: "How are disputes to be resolved?"
+        guideline: "Note if litigation, arbitration, mediation, or other. Include venue/forum details."
+        answer: ""
+
+  part_2_contract_summary:
+    title: "Contract Summary & Context"
+    questions:
+      - id: contract_purpose
+        prompt: "What is the primary purpose or scope of this contract?"
+        guideline: "Provide a brief summary of what goods/services are being provided and the business relationship."
+        answer: ""
+      - id: key_deliverables
+        prompt: "What are the key deliverables or obligations?"
+        guideline: "List the main deliverables, milestones, or performance obligations."
+        answer: ""
+      - id: special_terms
+        prompt: "Are there any unusual or special terms that don't fit standard categories?"
+        guideline: "Note any unique provisions, special conditions, or unusual clauses."
+        answer: ""
+      - id: dependencies
+        prompt: "Does this contract depend on or reference other agreements?"
+        guideline: "List any master agreements, related contracts, or incorporated documents."
+        answer: ""
+      - id: amendments_status
+        prompt: "Have there been amendments to this contract?"
+        guideline: "Note if this is an amendment itself or if amendments exist. List amendment dates if known."
+        answer: ""
+
+  part_3_gaps_internal_comments:
+    title: "Gaps & Internal Comments"
+    questions:
+      - id: missing_information
+        prompt: "What critical information or documents are missing?"
+        guideline: "List information needed from the Seller and identify any missing related documents (e.g., base agreements, amendments, SOWs, exhibits)."
+        answer: ""
+      - id: unclear_provisions
+        prompt: "Which provisions require clarification?"
+        guideline: "Identify ambiguous terms, undefined references, or provisions needing interpretation."
+        answer: ""
+      - id: execution_status
+        prompt: "Is this contract fully executed?"
+        guideline: "Note if signatures are present from all parties. Identify any missing signatures or dates."
+        answer: ""
+      - id: internal_notes
+        prompt: "What are your internal comments or questions for the deal team?"
+        guideline: "Use for internal observations, concerns, or items requiring business input. Not for seller communication."
+        answer: ""
+      - id: follow_up_required
+        prompt: "What follow-up actions are required?"
+        guideline: "List specific next steps, required approvals, or additional reviews needed."
+        answer: ""
+      - id: risk_observations
+        prompt: "What general risk observations do you have beyond the automated analysis?"
+        guideline: "Note any business risks, relationship concerns, or strategic considerations not captured by rules."
+        answer: ""
