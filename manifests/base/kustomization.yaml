@@ -10,6 +10,7 @@ resources:
   - rbac.yaml
   - backend-deployment.yaml
   - ui-deployment.yaml
+  - docling-deployment.yaml
   - route.yaml
   - buildconfig.yaml
 

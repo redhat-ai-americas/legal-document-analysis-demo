@@ -1,0 +1,21 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: legal-doc-backend
+  labels:
+    app: legal-doc-analysis
+    component: backend
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: legal-doc-backend:latest
+  source:
+    type: Binary
+    binary: {}
+    contextDir: /
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Containerfile.backend
+  triggers: []

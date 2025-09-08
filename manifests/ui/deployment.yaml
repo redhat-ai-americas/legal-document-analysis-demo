@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legal-doc-ui
+  labels:
+    app: legal-doc-analysis
+    component: ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legal-doc-analysis
+      component: ui
+  template:
+    metadata:
+      labels:
+        app: legal-doc-analysis
+        component: ui
+    spec:
+      containers:
+      - name: ui
+        image: image-registry.openshift-image-registry.svc:5000/legal-doc-test/legal-doc-ui:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8501
+          name: http
+          protocol: TCP
+        env:
+        - name: BACKEND_URL
+          value: "http://legal-doc-backend:8080"
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        envFrom:
+        - configMapRef:
+            name: legal-doc-config
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 1Gi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8501
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8501
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+        - name: streamlit-config
+          mountPath: /app/.streamlit
+      volumes:
+      - name: data
+        emptyDir: {}
+      - name: streamlit-config
+        emptyDir: {}

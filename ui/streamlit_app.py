@@ -500,7 +500,7 @@ def main():
     
     # Options
     with st.expander("⚙️ Options"):
-        clear_master = st.checkbox("Clear master spreadsheet before run", value=False, help="Reset the master spreadsheet to start fresh")
+        clear_history = st.checkbox("Clear main spreadsheet before run", value=False, help="Reset the main spreadsheet to start fresh")
 
     # Run button with better styling
     st.markdown("---")
@@ -555,7 +555,7 @@ def main():
             return
 
         # Clear master if requested
-        if clear_master:
+        if clear_history:
             # Prefer resetting the template master to preserve headers
             try:
                 from utils.template_excel_writer import reset_master_template_excel

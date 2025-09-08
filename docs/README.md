@@ -147,7 +147,7 @@ This documentation is maintained alongside the Contract Analysis system to ensur
 
 ## Streamlit UI (Minimal)
 
-Run the minimal UI to upload a rules file and multiple documents, execute the workflow, and download the master spreadsheet (Granite-only by default):
+Run the minimal UI to upload a rules file and multiple documents, execute the workflow, and download the main spreadsheet (Granite-only by default):
 
 ```bash
 # From repo root (ensure .env is set with Granite 3.3)
@@ -161,4 +161,4 @@ Steps:
 - Upload reference document (MD/TXT/PDF)
 - Upload one or more target documents (MD/TXT/PDF)
 - Click Run Workflow
-- Download the master spreadsheet at the end (saved also to `data/output/comparisons/contract_analysis_template_master.xlsx`)
+- Download the main spreadsheet at the end (saved also to `data/output/comparisons/contract_analysis_template_master.xlsx`)

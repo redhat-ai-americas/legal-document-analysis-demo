@@ -1,0 +1,102 @@
+# Use Red Hat UBI9 Python 3.11 as base
+FROM registry.redhat.io/ubi9/python-311:latest
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
+WORKDIR /app
+
+# Create simple Docling service
+RUN pip install --no-cache-dir docling>=2.0.0 fastapi uvicorn python-multipart
+
+# Create the API service
+RUN cat > /app/docling_service.py << 'EOF'
+#!/usr/bin/env python3
+"""Simplified Docling microservice for PDF to Markdown conversion"""
+
+import os
+import tempfile
+import logging
+from pathlib import Path
+from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.responses import PlainTextResponse
+from docling.document_converter import DocumentConverter
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = FastAPI(
+    title="Docling Service",
+    description="Microservice for PDF to Markdown conversion",
+    version="1.0.0"
+)
+
+# Initialize converter once
+converter = DocumentConverter()
+
+@app.post("/convert")
+async def convert_pdf(file: UploadFile = File(...)):
+    """Convert PDF to Markdown"""
+    if not file.filename.lower().endswith('.pdf'):
+        raise HTTPException(status_code=400, detail="Only PDF files are supported")
+    
+    # Save uploaded file temporarily
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
+        content = await file.read()
+        tmp_file.write(content)
+        tmp_path = tmp_file.name
+    
+    try:
+        # Convert PDF
+        result = converter.convert(tmp_path)
+        
+        # Export to markdown
+        markdown_content = result.document.export_to_markdown()
+        
+        # Add page anchors
+        lines = markdown_content.splitlines()
+        annotated = ["[[page=1]]"]
+        current_page = 1
+        lines_since_page = 0
+        
+        for line in lines:
+            lines_since_page += 1
+            if lines_since_page >= 50:
+                current_page += 1
+                annotated.append(f"[[page={current_page}]]")
+                lines_since_page = 0
+            annotated.append(line)
+        
+        markdown_with_pages = "\n".join(annotated)
+        
+        return PlainTextResponse(
+            content=markdown_with_pages,
+            media_type="text/markdown"
+        )
+    except Exception as e:
+        logger.error(f"Conversion failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Conversion failed: {str(e)}")
+    finally:
+        # Clean up temp file
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
+@app.get("/health")
+async def health():
+    """Health check endpoint"""
+    return {"status": "healthy"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8080)
+EOF
+
+# Make it executable
+RUN chmod +x /app/docling_service.py
+
+# Expose port
+EXPOSE 8080
+
+# Run the service
+CMD ["python", "/app/docling_service.py"]
