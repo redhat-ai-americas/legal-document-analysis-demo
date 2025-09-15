@@ -7,30 +7,24 @@ WORKDIR /app
 # Copy requirements first for better caching
 COPY requirements.txt .
 
-# Install dependencies
+# Install only UI dependencies (not full requirements)
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install streamlit
+    pip install --no-cache-dir streamlit python-dotenv requests pyyaml pandas
 
 # Copy only necessary files for UI
-COPY ui/ ./ui/
+COPY ui/streamlit_app_api.py ./ui/streamlit_app.py
 COPY config/ ./config/
 COPY sample_documents/ ./sample_documents/
-COPY workflows/ ./workflows/
-COPY nodes/ ./nodes/
-COPY utils/ ./utils/
-COPY prompts/ ./prompts/
-COPY questionnaires/ ./questionnaires/
 
-# Create necessary directories
+# Create necessary directories and set permissions for OpenShift
+USER 0
 RUN mkdir -p /app/data/output/runs \
     /app/data/output/comparisons \
-    /app/logs
-
-# Set permissions for OpenShift
-RUN chgrp -R 0 /app && \
+    /app/logs \
+    /app/.streamlit && \
+    chgrp -R 0 /app && \
     chmod -R g=u /app && \
-    chmod -R 775 /app/data /app/logs
+    chmod -R 775 /app/data /app/logs /app/.streamlit
 
 # Expose Streamlit port
 EXPOSE 8501
@@ -40,16 +34,26 @@ USER 1001
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app
+    PYTHONPATH=/app \
+    STREAMLIT_CONFIG_DIR=/app/.streamlit \
+    HOME=/app
 
 # Streamlit configuration
-RUN mkdir -p ~/.streamlit && \
-    echo "[server]" > ~/.streamlit/config.toml && \
-    echo "port = 8501" >> ~/.streamlit/config.toml && \
-    echo "address = '0.0.0.0'" >> ~/.streamlit/config.toml && \
-    echo "headless = true" >> ~/.streamlit/config.toml && \
-    echo "enableCORS = false" >> ~/.streamlit/config.toml && \
-    echo "enableXsrfProtection = false" >> ~/.streamlit/config.toml
+RUN echo "[server]" > /app/.streamlit/config.toml && \
+    echo "port = 8501" >> /app/.streamlit/config.toml && \
+    echo "address = '0.0.0.0'" >> /app/.streamlit/config.toml && \
+    echo "headless = true" >> /app/.streamlit/config.toml && \
+    echo "enableCORS = false" >> /app/.streamlit/config.toml && \
+    echo "enableXsrfProtection = false" >> /app/.streamlit/config.toml && \
+    echo "" >> /app/.streamlit/config.toml && \
+    echo "[browser]" >> /app/.streamlit/config.toml && \
+    echo "gatherUsageStats = false" >> /app/.streamlit/config.toml && \
+    echo "" >> /app/.streamlit/config.toml && \
+    echo "[runner]" >> /app/.streamlit/config.toml && \
+    echo "magicEnabled = false" >> /app/.streamlit/config.toml && \
+    echo "" >> /app/.streamlit/config.toml && \
+    echo "[client]" >> /app/.streamlit/config.toml && \
+    echo "showErrorDetails = true" >> /app/.streamlit/config.toml
 
 # Run Streamlit
 CMD ["streamlit", "run", "ui/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]

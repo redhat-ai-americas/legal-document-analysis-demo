@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: legal-doc-api
+  labels:
+    app: legal-doc-analysis
+    component: backend
+spec:
+  to:
+    kind: Service
+    name: legal-doc-backend
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

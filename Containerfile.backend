@@ -1,41 +1,43 @@
-# Backend service Containerfile
+# Backend API Container
 FROM registry.redhat.io/ubi9/python-311:latest
 
 # Set working directory
 WORKDIR /app
 
 # Copy requirements first for better caching
-COPY requirements.txt .
-
-# Install dependencies
+COPY requirements-backend.txt .
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements-backend.txt
 
 # Copy application code
-COPY . .
+COPY api/ ./api/
+COPY workflows/ ./workflows/
+COPY nodes/ ./nodes/
+COPY utils/ ./utils/
+COPY config/ ./config/
+COPY prompts/ ./prompts/
+COPY questionnaires/ ./questionnaires/
+COPY sample_documents/ ./sample_documents/
 
-# Create necessary directories
-RUN mkdir -p /app/data/output/runs \
+# Create necessary directories and set permissions for OpenShift
+USER 0
+RUN mkdir -p /app/data/uploads \
+    /app/data/output/runs \
     /app/data/output/comparisons \
-    /app/logs/runs \
-    /app/sample_documents
-
-# Set permissions for OpenShift
-RUN chgrp -R 0 /app && \
+    /app/logs && \
+    chgrp -R 0 /app && \
     chmod -R g=u /app && \
     chmod -R 775 /app/data /app/logs
 
-# Expose port for API service
-EXPOSE 8080
-
-# Use non-root user
+# Switch back to non-root user
 USER 1001
 
-# Set environment variables for production
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app \
-    USE_TEMPLATE_EXCEL=true \
-    USE_SELECTIVE_LOGGING=true
+# Expose port
+EXPOSE 8080
 
-# Run the backend API service
-CMD ["python", "-m", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+# Run the API
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8080"]

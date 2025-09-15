@@ -16,6 +16,7 @@ from datetime import datetime
 import json
 
 from workflows.graph_builder import build_graph
+from nodes.base_node import ProgressReporter, ProgressUpdate
 
 app = FastAPI(
     title="Legal Document Analysis API",
@@ -57,6 +58,9 @@ class JobStatus(BaseModel):
     status: str  # pending, running, completed, failed
     progress: float
     current_node: Optional[str] = None
+    current_message: Optional[str] = None
+    llm_output: Optional[str] = None
+    progress_history: Optional[List[Dict[str, Any]]] = None
     result: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
 
@@ -158,6 +162,9 @@ async def get_job_status(job_id: str):
         status=job["status"],
         progress=job.get("progress", 0.0),
         current_node=job.get("current_node"),
+        current_message=job.get("current_message"),
+        llm_output=job.get("llm_output"),
+        progress_history=job.get("progress_history", [])[-10:],  # Last 10 entries
         result=job.get("result"),
         error=job.get("error")
     )
@@ -184,8 +191,8 @@ async def download_result(job_id: str, file_type: str):
     # Map file types to actual files
     file_map = {
         "excel": f"/app/data/output/comparisons/contract_analysis_template_master.xlsx",
-        "yaml": f"/app/data/output/runs/run_{run_id}/questionnaire_results.yaml",
-        "markdown": f"/app/data/output/runs/run_{run_id}/analysis_summary.md",
+        "yaml": f"/app/data/output/runs/run_{run_id}/analysis.yaml",
+        "markdown": f"/app/data/output/runs/run_{run_id}/analysis.md",
         "jsonl": f"/app/data/output/runs/run_{run_id}/classified_sentences.jsonl",
         "state": f"/app/data/output/runs/run_{run_id}/workflow_state.json"
     }
@@ -239,10 +246,39 @@ def run_analysis(
         # Update job status
         analysis_jobs[job_id]["status"] = "running"
         analysis_jobs[job_id]["progress"] = 0.1
+        analysis_jobs[job_id]["progress_history"] = []
+        
+        # Set up progress reporter callback
+        reporter = ProgressReporter()
+        reporter.clear_callbacks()
+        
+        def capture_progress(update: ProgressUpdate):
+            """Capture progress updates from workflow"""
+            analysis_jobs[job_id]["current_node"] = update.node_name
+            analysis_jobs[job_id]["current_message"] = update.message
+            if update.progress is not None:
+                analysis_jobs[job_id]["progress"] = update.progress
+            
+            # Store LLM output if present in details
+            if update.details and "llm_output" in update.details:
+                analysis_jobs[job_id]["llm_output"] = update.details["llm_output"]
+            
+            # Add to history
+            analysis_jobs[job_id]["progress_history"].append({
+                "timestamp": update.timestamp.isoformat(),
+                "node": update.node_name,
+                "message": update.message,
+                "progress": update.progress,
+                "details": update.details
+            })
+        
+        reporter.register_callback(capture_progress)
         
         # Configure environment
         if rules_path:
             os.environ['RULES_MODE_ENABLED'] = 'true'
+        else:
+            os.environ['RULES_MODE_ENABLED'] = 'false'
         
         # Build workflow
         app = build_graph()
@@ -262,6 +298,7 @@ def run_analysis(
                 "target_document_path": target_path,
                 "reference_document_path": reference_path,
                 "rules_path": rules_path or "",
+                "terminology_path": "/app/config/canonical_labels.yaml",
                 "run_id": run_id,
                 "processing_start_time": run_id
             }
@@ -303,9 +340,12 @@ def check_disk_space():
 def check_model_connection():
     """Check model API connectivity"""
     try:
-        from utils.model_config import get_primary_model
-        model = get_primary_model()
-        return {"status": "connected", "model": "granite"}
+        from utils.model_config import model_config
+        # Test if we can get the model config
+        if model_config and hasattr(model_config, 'model_name'):
+            return {"status": "connected", "model": model_config.model_name}
+        else:
+            return {"status": "connected", "model": "granite"}
     except Exception as e:
         return {"status": "disconnected", "error": str(e)}
 

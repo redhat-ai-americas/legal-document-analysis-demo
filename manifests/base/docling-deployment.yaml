@@ -1,0 +1,100 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docling-service
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: docling
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legal-doc-analysis
+      component: docling
+  template:
+    metadata:
+      labels:
+        app: legal-doc-analysis
+        component: docling
+    spec:
+      containers:
+      - name: docling
+        image: image-registry.openshift-image-registry.svc:5000/legal-doc-analysis/docling-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: http
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 45
+          periodSeconds: 10
+          timeoutSeconds: 5
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docling-service
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: docling
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: legal-doc-analysis
+    component: docling
+
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: docling-service
+  namespace: legal-doc-analysis
+  labels:
+    app: legal-doc-analysis
+    component: docling
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/redhat-ai-americas/legal-document-analysis-demo
+      ref: main
+    contextDir: /
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Containerfile.docling
+  output:
+    to:
+      kind: ImageStreamTag
+      name: docling-service:latest
+  triggers:
+  - type: ConfigChange

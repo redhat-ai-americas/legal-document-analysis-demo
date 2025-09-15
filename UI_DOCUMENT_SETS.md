@@ -103,7 +103,7 @@ sample_documents/
 1. **Quick Testing**: Use the AI Addendum set for quick testing - it's pre-configured and ready to use
 2. **Batch Processing**: Select multiple target documents to analyze them all at once
 3. **Mixed Mode**: Start with a predefined set and add your own target documents
-4. **Clear Master**: Use the option to clear the master spreadsheet when starting fresh analysis
+4. **Clear History**: Use the option to clear the main spreadsheet when starting fresh analysis
 
 ## Troubleshooting
 

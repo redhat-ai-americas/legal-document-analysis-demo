@@ -1,7 +1,7 @@
 import os
 import tempfile
 import sys
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Deque
 import yaml
 from pathlib import Path
 
@@ -201,11 +201,11 @@ def run_workflow_for_documents(doc_paths: List[str], reference_path: str, rules_
             details_container = progress_container.container()
             
             # Track recent updates and processed rules
-            recent_updates = deque(maxlen=3)
-            processed_rules = {}
-            current_llm_output = None  # Track current LLM streaming
-            accumulated_response = ""  # Accumulate the streaming response
-            overall_progress = 0.0  # Track overall progress
+            recent_updates: Deque[ProgressUpdate] = deque(maxlen=3)
+            processed_rules: Dict[str, Any] = {}
+            current_llm_output: Optional[Any] = None  # Track current LLM streaming
+            accumulated_response: str = ""  # Accumulate the streaming response
+            overall_progress: float = 0.0  # Track overall progress
             
             def update_callback(update: ProgressUpdate):
                 """Callback to display progress updates in Streamlit"""
@@ -500,7 +500,7 @@ def main():
     
     # Options
     with st.expander("⚙️ Options"):
-        clear_master = st.checkbox("Clear master spreadsheet before run", value=False, help="Reset the master spreadsheet to start fresh")
+        clear_history = st.checkbox("Clear main spreadsheet before run", value=False, help="Reset the main spreadsheet to start fresh")
 
     # Run button with better styling
     st.markdown("---")
@@ -555,7 +555,7 @@ def main():
             return
 
         # Clear master if requested
-        if clear_master:
+        if clear_history:
             # Prefer resetting the template master to preserve headers
             try:
                 from utils.template_excel_writer import reset_master_template_excel
